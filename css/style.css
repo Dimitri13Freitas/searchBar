@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  display: flex;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.item {
+  max-width: 450px;
+}
+#input {
+  margin: 10px auto 25px auto;
+  display: block;
+}
+.r {
+  display: none;
+}
