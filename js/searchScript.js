@@ -1,7 +1,7 @@
-export class Search {
+export class SearchOnChange {
   constructor(input, container, topic, item) {
-    this.input = document.getElementById(input);
-    this.container = document.getElementById(container);
+    this.input = document.querySelector(input);
+    this.container = document.querySelector(container);
     this.items = item ? this.container.querySelectorAll(item) : this.container.querySelectorAll('div');
     this.topicElement = topic ? topic : 'h1';
     this.removeClass = 'r';
@@ -18,10 +18,10 @@ export class Search {
     }
   }
   handleChange() {
-    const userValue = this.input.value;
+    const inputValue = this.input.value;
     this.items.forEach(e => {
       const topic = e.querySelector(this.topicElement).innerText;
-      if(this.changeString(topic) === this.changeString(userValue)) {
+      if(this.changeString(topic) === this.changeString(inputValue)) {
         // Animção Implementar isto depois
       } else {
         e.classList.add(this.removeClass);
@@ -43,4 +43,31 @@ export class Search {
   focusOnLoad() {
     window.onload = () => {this.input.focus()}
   }
+}
+
+export class SearchOnKeyDown extends SearchOnChange {
+  constructor(input, container, topic, item){
+    super(input, container, topic, item)
+  }
+  addEventsInput() {
+    this.input.addEventListener('keyup', this.handleChange);
+    // this.input.addEventListener('keyup', this.inputEmpty);
+  }
+  handleChange() {
+    this.inputEmpty();
+    let inputValue = this.input.value;
+    inputValue = this.changeString(inputValue);
+    this.items.forEach(e => {
+      let topic = e.querySelector(this.topicElement).innerText;
+      topic = this.changeString(topic);
+      if(topic[inputValue.length - 1] === inputValue[inputValue.length - 1]) {
+        // Animção Implementar isto depois
+      } else {
+        e.classList.add(this.removeClass)
+      }
+    })
+
+
+  }
+
 }
