@@ -13,7 +13,8 @@
 .item {
   max-width: 450px;
 }
-#input {
+#inputItems,
+#inputList {
   margin: 10px auto 25px auto;
   display: block;
 }

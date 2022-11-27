@@ -1,10 +1,11 @@
 export class SearchOnChange {
-  constructor(input, container, topic, item) {
+  constructor(input, container, item, topic) {
     this.input = document.querySelector(input);
     this.container = document.querySelector(container);
     this.items = item ? this.container.querySelectorAll(item) : this.container.querySelectorAll('div');
-    this.topicElement = topic ? topic : 'h1';
+    this.topicElement = topic ? topic : item;
     this.removeClass = 'r';
+    this.teste = item === this.topicElement ? true : false;
   }
   addEventsInput() {
     this.input.addEventListener('change', this.handleChange);
@@ -20,9 +21,9 @@ export class SearchOnChange {
   handleChange() {
     const inputValue = this.input.value;
     this.items.forEach(e => {
-      const topic = e.querySelector(this.topicElement).innerText;
+      const topic = this.teste ? e.innerText : e.querySelector(this.topicElement).innerText;
       if(this.changeString(topic) === this.changeString(inputValue)) {
-        // Animção Implementar isto depois
+        // Implementar Animação
       } else {
         e.classList.add(this.removeClass);
       }
@@ -41,7 +42,7 @@ export class SearchOnChange {
     this.addEventsInput();
   }
   focusOnLoad() {
-    window.onload = () => {this.input.focus()}
+    window.onload = () => this.input.focus();
   }
 }
 
@@ -51,23 +52,19 @@ export class SearchOnKeyDown extends SearchOnChange {
   }
   addEventsInput() {
     this.input.addEventListener('keyup', this.handleChange);
-    // this.input.addEventListener('keyup', this.inputEmpty);
   }
   handleChange() {
     this.inputEmpty();
     let inputValue = this.input.value;
     inputValue = this.changeString(inputValue);
     this.items.forEach(e => {
-      let topic = e.querySelector(this.topicElement).innerText;
+      let topic = this.teste ? e.innerText : e.querySelector(this.topicElement).innerText;;
       topic = this.changeString(topic);
       if(topic[inputValue.length - 1] === inputValue[inputValue.length - 1]) {
-        // Animção Implementar isto depois
+        // Animação Implementar isto depois
       } else {
         e.classList.add(this.removeClass)
       }
     })
-
-
   }
-
 }
