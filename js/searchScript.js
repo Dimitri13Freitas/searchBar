@@ -4,7 +4,7 @@ export class SearchOnChange {
     this.container = document.querySelector(container);
     this.items = item ? this.container.querySelectorAll(item) : this.container.querySelectorAll('div');
     this.topicElement = topic ? topic : item;
-    this.removeClass = 'r';
+    this.class = 'r';
     this.teste = item === this.topicElement ? true : false;
   }
   addEventsInput() {
@@ -14,7 +14,7 @@ export class SearchOnChange {
   inputEmpty() {
     if(this.input.value === '') {
       this.items.forEach(e => {
-        e.classList.remove(this.removeClass);
+        e.classList.remove(this.class);
       })
     }
   }
@@ -25,7 +25,7 @@ export class SearchOnChange {
       if(this.changeString(topic) === this.changeString(inputValue)) {
         // Implementar Animação
       } else {
-        e.classList.add(this.removeClass);
+        e.classList.add(this.class);
       }
     });
   }
@@ -63,7 +63,7 @@ export class SearchOnKeyDown extends SearchOnChange {
       if(topic[inputValue.length - 1] === inputValue[inputValue.length - 1]) {
         // Animação Implementar isto depois
       } else {
-        e.classList.add(this.removeClass)
+        e.classList.add(this.class)
       }
     })
   }
