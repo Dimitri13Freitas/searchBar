@@ -5,7 +5,7 @@ export class SearchOnChange {
     this.items = item ? this.container.querySelectorAll(item) : this.container.querySelectorAll('div');
     this.topicElement = topic ? topic : item;
     this.class = 'r';
-    this.teste = item === this.topicElement ? true : false;
+    this.switch = item === this.topicElement ? true : false;
   }
   addEventsInput() {
     this.input.addEventListener('change', this.handleChange);
@@ -21,7 +21,7 @@ export class SearchOnChange {
   handleChange() {
     const inputValue = this.input.value;
     this.items.forEach(e => {
-      const topic = this.teste ? e.innerText : e.querySelector(this.topicElement).innerText;
+      const topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
       if(this.changeString(topic) === this.changeString(inputValue)) {
         // Implementar Animação
       } else {
@@ -30,7 +30,7 @@ export class SearchOnChange {
     });
   }
   changeString(str) {
-    return str.toLowerCase().normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
+    return str.toLowerCase().normalize('NFD').replace(/[^a-zA-Z\s]/g, '');
   }
   bind() {
     this.handleChange = this.handleChange.bind(this);
@@ -47,9 +47,6 @@ export class SearchOnChange {
 }
 
 export class SearchOnKeyDown extends SearchOnChange {
-  constructor(input, container, topic, item){
-    super(input, container, topic, item)
-  }
   addEventsInput() {
     this.input.addEventListener('keyup', this.handleChange);
   }
@@ -58,12 +55,13 @@ export class SearchOnKeyDown extends SearchOnChange {
     let inputValue = this.input.value;
     inputValue = this.changeString(inputValue);
     this.items.forEach(e => {
-      let topic = this.teste ? e.innerText : e.querySelector(this.topicElement).innerText;;
+      let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;;
       topic = this.changeString(topic);
       if(topic[inputValue.length - 1] === inputValue[inputValue.length - 1]) {
         // Animação Implementar isto depois
       } else {
-        e.classList.add(this.class)
+        e.classList.add(this.class);
+        console.log(this.items)
       }
     })
   }

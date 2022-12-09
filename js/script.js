@@ -1,9 +1,6 @@
-import { SearchOnChange, SearchOnKeyDown } from './searchScript.js';
+import { SearchOnChange } from './searchScript.js';
 
-const searchBarItems = new SearchOnKeyDown('#inputItems', '#containerItems', 'div', 'h1');
-// const searchBarList = new SearchOnKeyDown('#inputList', '#containerList', 'li');
+const searchBarItems = new SearchOnChange('#input', '#container', 'div', 'h1');
+
 searchBarItems.init();
 searchBarItems.focusOnLoad();
-
-// searchBarList.init();
-// searchBarList.focusOnLoad();
