@@ -4,7 +4,6 @@ export class SearchOnChange {
     this.container = document.querySelector(container);
     this.items = this.container.querySelectorAll(item);
     this.topicElement = topic ? topic : item;
-    this.class = 'r';
     this.switch = item === this.topicElement ? true : false;
   }
   addEventsInput() {
@@ -14,7 +13,7 @@ export class SearchOnChange {
   inputEmpty() {
     if(this.input.value === '') {
       this.items.forEach(e => {
-        e.classList.remove(this.class);
+        e.style.display = 'block';
       })
     }
   }
@@ -25,7 +24,7 @@ export class SearchOnChange {
       if(this.changeString(topic) === this.changeString(inputValue)) {
         // Implementar Animação
       } else {
-        e.classList.add(this.class);
+        e.style.display = 'none';
       }
     });
   }
@@ -44,37 +43,40 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  animContainer() {
-    this.container.style.backgroundColor = '#2c2c2c'
+  animContainer(time, pixels, side) {
+    const tim = time;
+    const pixel = pixels;
+    const sid = side;
   }
 }
 
 export class SearchOnKeyDown extends SearchOnChange {
   addEventsInput() {
     this.input.addEventListener('keyup', (e) => {
-      this.handleEvent(e);
+      this.handleEvent();
       this.inputEmpty(e);
     });
   }
   inputEmpty(e) {
     if(e.keyCode === 8) {
       this.items.forEach(e => {
-        e.classList.remove(this.class);
+        e.style.display = 'block';
       })
       this.handleEvent();
     }
   }
   handleEvent() {
-      let inputValue = this.input.value;
-      inputValue = this.changeString(inputValue);
-      this.items.forEach(e => {
-        let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;;
-        topic = this.changeString(topic);
-        if(topic[inputValue.length - 1] === inputValue[inputValue.length - 1]) {
-          // Animação Implementar isto depois
-        } else {
-          e.classList.add(this.class);
-        }
-      })
+    let inputValue = this.input.value;
+    inputValue = this.changeString(inputValue);
+    this.items.forEach(e => {
+      let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
+      topic = this.changeString(topic);
+      topic =  topic.slice(0,inputValue.length);
+      if(topic === inputValue) {
+        // Animação Implementar isto depois
+      } else {
+        e.style.display = 'none';
+      }
+    })
   }
 }
