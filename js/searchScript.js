@@ -1,5 +1,5 @@
 export class SearchOnChange {
-  constructor(input, container, item, topic) {
+  constructor(input, item, topic) {
     this.input = document.querySelector(input);
     this.items = document.querySelectorAll(item);
     this.topicElement = topic ? topic : item;

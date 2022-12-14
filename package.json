@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production ./js/script.js -o ./dist",
+    "build": "webpack --mode production ./js/script.js -o ./",
     "dev": "webpack --mode development ./js/script.js -o ./ --watch"
   },
   "repository": {
