@@ -1,8 +1,7 @@
 export class SearchOnChange {
   constructor(input, container, item, topic) {
     this.input = document.querySelector(input);
-    this.container = document.querySelector(container);
-    this.items = this.container.querySelectorAll(item);
+    this.items = document.querySelectorAll(item);
     this.topicElement = topic ? topic : item;
     this.switch = item === this.topicElement ? true : false;
   }
@@ -43,20 +42,27 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  anime(element, animClass) {
-    this.animElement = this.container.querySelectorAll(element);
+  anime(animClass) {
+    this.animElement = [];
+    // this.animElement = document.querySelectorAll(animElement);
+    // this.animElement.forEach(e => e.style.opacity = 0);
+    
     this.animClass = animClass;
-    this.animeFunc();
   }
   animeFunc() {
+    this.animElement.forEach(e => e.style.opacity = 0);
     this.animElement.forEach((e, i) => {
       this.animElement[0].classList.add(this.animClass);
-      e.addEventListener('animationend', () => {
-        // e.classList.remove(this.animClass);
-        if(i != this.animElement.length - 1) {
-          this.animElement[i + 1].classList.add(this.animClass);
-        }
-      })
+      this.animElement[0].style.opacity = 1;
+      if(this.animElement.length > 1) {
+        e.addEventListener('animationend', () => {
+          e.classList.remove(this.animClass);
+          if(i != this.animElement.length - 1) {
+            e.nextElementSibling.classList.add(this.animClass);
+            e.nextElementSibling.style.opacity = 1;
+          }
+        })
+      }
     })
   }
 }
@@ -83,9 +89,14 @@ export class SearchOnKeyDown extends SearchOnChange {
     this.items.forEach(e => {
       let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
       topic = this.changeString(topic);
-      topic =  topic.slice(0,inputValue.length);
+      topic = topic.slice(0,inputValue.length);
       if(topic === inputValue) {
-        this.animeFunc();
+        if(this.animClass) {
+          this.animElement.push(e);
+          if(this.animElement.length === 5) {
+            this.animeFunc();
+          }
+        }
       } else {
         e.style.display = 'none';
       }

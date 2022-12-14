@@ -1,9 +1,10 @@
 import { SearchOnKeyDown } from './searchScript.js';
 
 
-const searchBarItems = new SearchOnKeyDown('#input', '#container', 'div', 'h1');
+const searchBarItems = new SearchOnKeyDown('#input', '#container', '.container div', 'h1');
 
-searchBarItems.anime('div', 'anima')
+// searchBarItems.anime('.container div','anima');
+// searchBarItems.anime('anima');
 
 searchBarItems.focusOnLoad();
 searchBarItems.init();
