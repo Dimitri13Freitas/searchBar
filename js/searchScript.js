@@ -22,7 +22,7 @@ export class SearchOnChange {
     this.items.forEach(e => {
       const topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
       if(this.changeString(topic) === this.changeString(inputValue)) {
-        // Implementar Animação
+
       } else {
         e.style.display = 'none';
       }
@@ -43,10 +43,21 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  animContainer(time, pixels, side) {
-    const tim = time;
-    const pixel = pixels;
-    const sid = side;
+  anime(element, animClass) {
+    this.animElement = this.container.querySelectorAll(element);
+    this.animClass = animClass;
+    this.animeFunc();
+  }
+  animeFunc() {
+    this.animElement.forEach((e, i) => {
+      this.animElement[0].classList.add(this.animClass);
+      e.addEventListener('animationend', () => {
+        // e.classList.remove(this.animClass);
+        if(i != this.animElement.length - 1) {
+          this.animElement[i + 1].classList.add(this.animClass);
+        }
+      })
+    })
   }
 }
 
@@ -65,6 +76,7 @@ export class SearchOnKeyDown extends SearchOnChange {
       this.handleEvent();
     }
   }
+
   handleEvent() {
     let inputValue = this.input.value;
     inputValue = this.changeString(inputValue);
@@ -73,7 +85,7 @@ export class SearchOnKeyDown extends SearchOnChange {
       topic = this.changeString(topic);
       topic =  topic.slice(0,inputValue.length);
       if(topic === inputValue) {
-        // Animação Implementar isto depois
+        this.animeFunc();
       } else {
         e.style.display = 'none';
       }

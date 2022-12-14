@@ -17,6 +17,7 @@
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  opacity: 0;
 }
 .item h1,
 .item p {
@@ -27,19 +28,13 @@
   display: block;
 }
 
-:root {
-  --pixels: 30px;
-  --side: 30px;
+.anima {
+  animation: seila 0.15s ease-in-out forwards;
 }
 
-/* Animação */
-.anim {
-  animation: anim 0.3s;
-}
-
-@keyframes anim {
+@keyframes seila {
   from {
-    transform: translate3d(-30px, 0, 0);
+    transform: translate3d(0, 30px, 0);
     opacity: 0;
   }
   to {
