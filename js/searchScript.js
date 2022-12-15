@@ -12,7 +12,7 @@ export class SearchOnChange {
   inputEmpty() {
     if(this.input.value === '') {
       this.items.forEach(e => {
-        e.style.display = 'block';
+        e.setAttribute('style', '');
       })
     }
   }
@@ -42,24 +42,26 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  anime(animClass) {
-    this.animElement = [];
-    // this.animElement = document.querySelectorAll(animElement);
-    // this.animElement.forEach(e => e.style.opacity = 0);
-    
+  anima(animElement, animClass) {
     this.animClass = animClass;
+    this.animElement = document.querySelectorAll(animElement);
+    this.animTarget = animElement;
+    // this.animaFunc();
   }
-  animeFunc() {
+  animaFunc() {
     this.animElement.forEach(e => e.style.opacity = 0);
+    this.animElement = document.querySelectorAll(`${this.animTarget}[data-select]`);
+    // console.log(this.animElement);
     this.animElement.forEach((e, i) => {
-      this.animElement[0].classList.add(this.animClass);
       this.animElement[0].style.opacity = 1;
+      this.animElement[0].classList.add(this.animClass);
       if(this.animElement.length > 1) {
         e.addEventListener('animationend', () => {
+          e.removeAttribute('data-select');
           e.classList.remove(this.animClass);
           if(i != this.animElement.length - 1) {
-            e.nextElementSibling.classList.add(this.animClass);
-            e.nextElementSibling.style.opacity = 1;
+            this.animElement[i + 1].classList.add(this.animClass);
+            this.animElement[i + 1].style.opacity = 1;
           }
         })
       }
@@ -77,12 +79,13 @@ export class SearchOnKeyDown extends SearchOnChange {
   inputEmpty(e) {
     if(e.keyCode === 8) {
       this.items.forEach(e => {
-        e.style.display = 'block';
+        e.setAttribute('style', '');
+        // e.classList.remove(this.animClass);
+        // e.removeAttribute('data-select');
       })
-      this.handleEvent();
+      // this.handleEvent();
     }
   }
-
   handleEvent() {
     let inputValue = this.input.value;
     inputValue = this.changeString(inputValue);
@@ -91,12 +94,10 @@ export class SearchOnKeyDown extends SearchOnChange {
       topic = this.changeString(topic);
       topic = topic.slice(0,inputValue.length);
       if(topic === inputValue) {
-        if(this.animClass) {
-          this.animElement.push(e);
-          if(this.animElement.length === 5) {
-            this.animeFunc();
-          }
-        }
+        // if(this.animClass && this.animElement) {
+        e.setAttribute('data-select','');
+          this.animaFunc();
+        // }
       } else {
         e.style.display = 'none';
       }
