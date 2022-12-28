@@ -51,13 +51,13 @@ Assim ja esta pronto para uso.
 
 Se ainda resta alguma dúvida olhe a pasta de `examples` no repositório, onde tem os dois exemplos na prática.
 
-## Preferencias
+## Preferências
 
 A seguir vem funções que você pode ou não ativar, pois não afetam no propósito principal do plugin:
 
 ### FocusOnLoad
 
-Com esta função ativa o elemento input ja vai estar selecionado a cada carregamento de página.
+Com esta função ativa o elemento input já vai estar pronto para escrita sem que precise ser selecionado a cada carregamento de página.
 
 ```js
 // Considerando os exemplos ja vistos
