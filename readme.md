@@ -47,7 +47,7 @@ Logo após isso inicie o script com:
 searchBar.init();
 ```
 
-Assim ja esta pronto para uso.
+Assim já está pronto para uso.
 
 Se ainda resta alguma dúvida olhe a pasta de `examples` no repositório, onde tem os dois exemplos na prática.
 
@@ -66,4 +66,56 @@ searchBar.focusOnLoad();
 
 ### Anima
 
-Em desenvolvimento...
+A cada evento de pesquisa irá ser executada uma animação que você mesmo pode criar.
+Atribuindo a sua animação a uma classe só é necessario colocar a mesma como parametro na função
+
+```js
+searchBar.anima("anima");
+// Considere o exemplo a abaixo
+```
+
+```css
+/* Este é um exemplo de animação no CSS, não se limite a somente isso use sua criatividade */
+.anima {
+  animation: animacao 0.3s;
+}
+@keyframes animacao {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+```
+
+### LoadEffect
+
+Semelhante a função de Anima vista acima, porém só é preciso colocar o elemento que você mesmo pode criar com sua criatividade.
+
+```js
+searchBar.loadEffect(".loadElement");
+// Considere o exemplo a abaixo
+```
+
+```html
+<div class="loadElement"></div>
+```
+
+```css
+/* Para que o script funcione da melhor forma é preciso colocar o loadElement como "display: none;" */
+.loadElement {
+  display: none;
+  height: 5px;
+  animation: animacao;
+}
+
+@keyframes animacao {
+  from {
+    width: 0;
+  }
+  to {
+    width: 30px;
+  }
+}
+```
