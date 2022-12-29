@@ -28,6 +28,9 @@ export class SearchOnChange {
         if(this.animClass) {
           this.animaFunc();
         }
+        if(this.loadElement) {
+          this.loadEffectFunc();
+        }
       } else {
         e.style.display = 'none';
       }
@@ -57,11 +60,21 @@ export class SearchOnChange {
       e.addEventListener('animationend', () => e.classList.remove(this.animClass));
     });
   }
-  load(loadElement ,msg) {
-    this.msg = msg;
+  loadEffect(loadElement) {
     this.loadElement = document.querySelector(loadElement);
-    console.log(this.msg);
-    console.log(this.loadElement);
+  }
+  loadEffectFunc() {
+    const time = +(Math.random() * 2).toFixed(2);
+    this.items.forEach(e => e.style.opacity = '0');
+    this.loadElement.style.animationDuration = `${time}s`
+    this.loadElement.style.display = 'block';
+    this.loadElement.addEventListener('animationend', () => {
+      this.items.forEach(e => e.style.opacity = '1');
+      this.loadElement.style.display = 'none';
+      if(this.animClass) {
+        this.animaFunc();
+      }
+    })
   }
 }
 
@@ -91,6 +104,9 @@ export class SearchOnKeyDown extends SearchOnChange {
       if(topic === inputValue) {
         if(this.animClass) {
           this.animaFunc();
+        }
+        if(this.loadElement) {
+          this.loadEffectFunc();
         }
       } else {
         e.style.display = 'none';
