@@ -56,6 +56,8 @@ input {
 }
 
 .loadElement {
+  /* É obrigatório o elemento que ira executar a animação de loading ser display:none; como padrão */
+  display: none;
   animation: load;
   height: 5px;
   background-color: dimgrey;

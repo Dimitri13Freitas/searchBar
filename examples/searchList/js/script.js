@@ -1,6 +1,9 @@
 import { SearchOnKeyDown } from './searchScript.js';
 
-const searchBarItems = new SearchOnKeyDown('#input', '.lista li');
+const searchBar = new SearchOnKeyDown('#input', '.lista li');
 
-searchBarItems.focusOnLoad();
-searchBarItems.init();
+searchBar.loadEffect('.loadElement');
+searchBar.anima('anima');
+
+searchBar.focusOnLoad();
+searchBar.init();

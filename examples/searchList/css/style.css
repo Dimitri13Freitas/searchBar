@@ -31,9 +31,37 @@ input {
 .lista li {
   list-style: none;
   padding: 10px 20px;
-  /* background-color: ; */
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   max-width: 500px;
   margin: 0 auto;
+  /* rotate: 30deg; */
+}
+.loadElement {
+  display: none;
+  width: 0;
+  height: 5px;
+  border-radius: 8px;
+  background: #141414;
+  animation: 0.3s load forwards;
+  margin: 20px auto;
+}
+@keyframes load {
+  from {
+    width: 0;
+  }
+  to {
+    width: 250px;
+  }
+}
+.anima {
+  animation: anima 0.4s forwards;
+}
+@keyframes anima {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
 }
