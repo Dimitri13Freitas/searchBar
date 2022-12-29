@@ -41,3 +41,31 @@ input {
 .container div p {
   text-align: center;
 }
+
+.anima {
+  animation: anima 0.3s;
+}
+
+@keyframes anima {
+  from {
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.loadElement {
+  animation: load;
+  height: 5px;
+  background-color: dimgrey;
+}
+
+@keyframes load {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

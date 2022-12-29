@@ -9,19 +9,28 @@ export class SearchOnChange {
     this.input.addEventListener('change', this.handleEvent);
     this.input.addEventListener('keyup', this.inputEmpty);
   }
-  inputEmpty() {
-    if(this.input.value === '') {
+  inputEmpty(e) {
+    if(e.code === 'Backspace') {
       this.items.forEach(e => {
-        e.style.display = 'block';
+        e.removeAttribute('style');
+        e.classList.remove(this.animClass);
       })
+      this.handleEvent();
     }
   }
   handleEvent() {
-    const inputValue = this.input.value;
+    let inputValue =  this.changeString(this.input.value);
     this.items.forEach(e => {
-      const topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
-      if(this.changeString(topic) === this.changeString(inputValue)) {
-
+      let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
+      topic = this.changeString(topic);
+      topic = topic.slice(0,inputValue.length);
+      if(topic === inputValue) {
+        if(this.animClass) {
+          this.animaFunc();
+        }
+        if(this.loadElement) {
+          this.loadEffectFunc();
+        }
       } else {
         e.style.display = 'none';
       }
@@ -42,26 +51,28 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  anime(animClass) {
-    this.animElement = [];
-    // this.animElement = document.querySelectorAll(animElement);
-    // this.animElement.forEach(e => e.style.opacity = 0);
-    
+  anima(animClass) {
     this.animClass = animClass;
   }
-  animeFunc() {
-    this.animElement.forEach(e => e.style.opacity = 0);
-    this.animElement.forEach((e, i) => {
-      this.animElement[0].classList.add(this.animClass);
-      this.animElement[0].style.opacity = 1;
-      if(this.animElement.length > 1) {
-        e.addEventListener('animationend', () => {
-          e.classList.remove(this.animClass);
-          if(i != this.animElement.length - 1) {
-            e.nextElementSibling.classList.add(this.animClass);
-            e.nextElementSibling.style.opacity = 1;
-          }
-        })
+  animaFunc() {
+    this.items.forEach(e => {
+      e.classList.add(this.animClass);
+      e.addEventListener('animationend', () => e.classList.remove(this.animClass));
+    });
+  }
+  loadEffect(loadElement) {
+    this.loadElement = document.querySelector(loadElement);
+  }
+  loadEffectFunc() {
+    const time = +(Math.random() * 2).toFixed(2);
+    this.items.forEach(e => e.style.opacity = '0');
+    this.loadElement.style.animationDuration = `${time}s`
+    this.loadElement.style.display = 'block';
+    this.loadElement.addEventListener('animationend', () => {
+      this.items.forEach(e => e.style.opacity = '1');
+      this.loadElement.style.display = 'none';
+      if(this.animClass) {
+        this.animaFunc();
       }
     })
   }
@@ -69,33 +80,33 @@ export class SearchOnChange {
 
 export class SearchOnKeyDown extends SearchOnChange {
   addEventsInput() {
-    this.input.addEventListener('keyup', (e) => {
-      this.handleEvent();
-      this.inputEmpty(e);
+    document.addEventListener('keyup', (e) => {
+      if(e.code === 'Backspace' || this.input.value === '') {
+        this.inputEmpty();
+      } else {
+        this.handleEvent();
+      }
     });
   }
-  inputEmpty(e) {
-    if(e.keyCode === 8) {
-      this.items.forEach(e => {
-        e.style.display = 'block';
-      })
-      this.handleEvent();
-    }
-  }
-
-  handleEvent() {
-    let inputValue = this.input.value;
-    inputValue = this.changeString(inputValue);
+  inputEmpty() {
     this.items.forEach(e => {
+      e.removeAttribute('style');
+      e.classList.remove(this.animClass);
+    })
+    this.handleEvent();
+  }
+  handleEvent() {
+    let inputValue =  this.changeString(this.input.value);
+    this.items.forEach(e => { 
       let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
       topic = this.changeString(topic);
       topic = topic.slice(0,inputValue.length);
       if(topic === inputValue) {
         if(this.animClass) {
-          this.animElement.push(e);
-          if(this.animElement.length === 5) {
-            this.animeFunc();
-          }
+          this.animaFunc();
+        }
+        if(this.loadElement) {
+          this.loadEffectFunc();
         }
       } else {
         e.style.display = 'none';
