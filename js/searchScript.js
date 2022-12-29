@@ -9,19 +9,25 @@ export class SearchOnChange {
     this.input.addEventListener('change', this.handleEvent);
     this.input.addEventListener('keyup', this.inputEmpty);
   }
-  inputEmpty() {
-    if(this.input.value === '') {
+  inputEmpty(e) {
+    if(e.code === 'Backspace') {
       this.items.forEach(e => {
-        e.setAttribute('style', '');
+        e.removeAttribute('style');
+        e.classList.remove(this.animClass);
       })
+      this.handleEvent();
     }
   }
   handleEvent() {
-    const inputValue = this.input.value;
+    let inputValue =  this.changeString(this.input.value);
     this.items.forEach(e => {
-      const topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
-      if(this.changeString(topic) === this.changeString(inputValue)) {
-
+      let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
+      topic = this.changeString(topic);
+      topic = topic.slice(0,inputValue.length);
+      if(topic === inputValue) {
+        if(this.animClass) {
+          this.animaFunc();
+        }
       } else {
         e.style.display = 'none';
       }
@@ -42,62 +48,50 @@ export class SearchOnChange {
   focusOnLoad() {
     window.onload = () => this.input.focus();
   }
-  anima(animElement, animClass) {
+  anima(animClass) {
     this.animClass = animClass;
-    this.animElement = document.querySelectorAll(animElement);
-    this.animTarget = animElement;
-    // this.animaFunc();
   }
   animaFunc() {
-    this.animElement.forEach(e => e.style.opacity = 0);
-    this.animElement = document.querySelectorAll(`${this.animTarget}[data-select]`);
-    // console.log(this.animElement);
-    this.animElement.forEach((e, i) => {
-      this.animElement[0].style.opacity = 1;
-      this.animElement[0].classList.add(this.animClass);
-      if(this.animElement.length > 1) {
-        e.addEventListener('animationend', () => {
-          e.removeAttribute('data-select');
-          e.classList.remove(this.animClass);
-          if(i != this.animElement.length - 1) {
-            this.animElement[i + 1].classList.add(this.animClass);
-            this.animElement[i + 1].style.opacity = 1;
-          }
-        })
-      }
-    })
+    this.items.forEach(e => {
+      e.classList.add(this.animClass);
+      e.addEventListener('animationend', () => e.classList.remove(this.animClass));
+    });
+  }
+  load(loadElement ,msg) {
+    this.msg = msg;
+    this.loadElement = document.querySelector(loadElement);
+    console.log(this.msg);
+    console.log(this.loadElement);
   }
 }
 
 export class SearchOnKeyDown extends SearchOnChange {
   addEventsInput() {
-    this.input.addEventListener('keyup', (e) => {
-      this.handleEvent();
-      this.inputEmpty(e);
+    document.addEventListener('keyup', (e) => {
+      if(e.code === 'Backspace' || this.input.value === '') {
+        this.inputEmpty();
+      } else {
+        this.handleEvent();
+      }
     });
   }
-  inputEmpty(e) {
-    if(e.keyCode === 8) {
-      this.items.forEach(e => {
-        e.setAttribute('style', '');
-        // e.classList.remove(this.animClass);
-        // e.removeAttribute('data-select');
-      })
-      // this.handleEvent();
-    }
+  inputEmpty() {
+    this.items.forEach(e => {
+      e.removeAttribute('style');
+      e.classList.remove(this.animClass);
+    })
+    this.handleEvent();
   }
   handleEvent() {
-    let inputValue = this.input.value;
-    inputValue = this.changeString(inputValue);
-    this.items.forEach(e => {
+    let inputValue =  this.changeString(this.input.value);
+    this.items.forEach(e => { 
       let topic = this.switch ? e.innerText : e.querySelector(this.topicElement).innerText;
       topic = this.changeString(topic);
       topic = topic.slice(0,inputValue.length);
       if(topic === inputValue) {
-        // if(this.animClass && this.animElement) {
-        e.setAttribute('data-select','');
+        if(this.animClass) {
           this.animaFunc();
-        // }
+        }
       } else {
         e.style.display = 'none';
       }

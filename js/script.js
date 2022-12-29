@@ -1,18 +1,10 @@
-import { SearchOnKeyDown } from './searchScript.js';
+import { SearchOnChange } from './searchScript.js';
 
-const searchBar = new SearchOnKeyDown('#input', '.container div', 'h1');
+const searchBar = new SearchOnChange('#input', '.container div', 'h1');
 
-searchBar.anima('.container div','anima');
+searchBar.anima('anima');
+
+searchBar.load('.load','Carregando...');
 
 searchBar.focusOnLoad();
 searchBar.init();
-
-// this.animElement = document.querySelectorAll(`${this.animTarget}[style*="opacity: 1;"]`)  
-
-// const x = document.querySelector('.container');
-
-
-// x.removeAttribute('data-penis');
-
-// console.log(x)
-
